@@ -8,4 +8,8 @@ abstract class BaseMovieRepository {
   Future<Either<Failure, List<Movie>>> getMovieNowPlaying(int page);
   Future<Either<Failure, List<Movie>>> getMovieUpcaming(int page);
   Future<Either<Failure, MovieDetail>> getMovieDetail(int movieId);
+
+  addMovieToFavorite(Movie movie);
+  Movie getSingleMovieFavorited(String key);
+  List<Movie> getMovieFavorited();
 }

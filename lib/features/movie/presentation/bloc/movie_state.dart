@@ -38,3 +38,11 @@ class MovieStateLoadedMovieDetail extends BaseMovieState {
   @override
   List<Object?> get props => [movie];
 }
+
+class MovieStateLoadedMovieFromFavorite extends BaseMovieState {
+  final List<Movie> movies;
+  MovieStateLoadedMovieFromFavorite(this.movies);
+
+  @override
+  List<Object?> get props => [movies];
+}

@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:fadhli_test_flutter/features/movie/domain/usecases/add_movie_to_favorite.dart';
+import 'package:fadhli_test_flutter/features/movie/domain/usecases/get_movie_favorited.dart';
+import 'package:fadhli_test_flutter/features/movie/domain/usecases/get_single_movie_favorited.dart';
 import 'core/constants/local_constants.dart';
 import 'features/movie/data/datasources/movie_local_datasource.dart';
 import 'features/movie/data/datasources/movie_remote_datasource.dart';
@@ -19,6 +22,7 @@ Future<void> init() async {
   Hive.registerAdapter(MovieAdapter());
   Hive.registerAdapter(MovieDetailAdapter());
 
+  await Hive.openBox(LocalConstants.favoritedMovieBox);
   var box = await Hive.openBox(LocalConstants.movieBox);
 
   //BOX
@@ -36,7 +40,10 @@ Future<void> init() async {
     () => MovieBloc(
       getMovieNowPlaying: movieInjection(),
       getMovieUpcoming: movieInjection(),
-      getMovieDetail: movieInjection(),
+      getMovieDetail: movieInjection(), 
+      addMovieToFavorite: movieInjection(), 
+      getFavoritedMovies: movieInjection(),
+      getSingleMovieFavorited: movieInjection()
     )
   );
 
@@ -56,6 +63,21 @@ Future<void> init() async {
       movieInjection()
     )
   );
+  movieInjection.registerLazySingleton(
+    () => AddMovieToFavorite(
+      movieInjection()
+    )
+  );
+  movieInjection.registerLazySingleton(
+    () => GetMovieFavorited(
+      movieInjection()
+    )
+  );
+  movieInjection.registerLazySingleton(
+    () => GetSingleMovieFavorited(
+      movieInjection()
+    )
+  );
 
   //REPOSITORY
   movieInjection.registerLazySingleton<BaseMovieRepository>(
@@ -69,7 +91,7 @@ Future<void> init() async {
   //DATA SOURCE
   movieInjection.registerLazySingleton<BaseMovieLocalDatasource>(
     () => MovieLocalDataSourceImplementation(
-      box: movieInjection()
+      box: movieInjection(),
     )
   );
   movieInjection.registerLazySingleton<BaseMovieRemoteDatasource>(

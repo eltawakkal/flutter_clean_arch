@@ -21,7 +21,7 @@ class MovieRepositoryImplemtation extends BaseMovieRepository {
   MovieRepositoryImplemtation({
     required this.baseMovieRemoteDatasource,
     required this.baseMovieLocalDataSource,
-    required this.box
+    required this.box,
   });
 
   @override
@@ -81,6 +81,22 @@ class MovieRepositoryImplemtation extends BaseMovieRepository {
     } catch (e) {
       return Left(Failure());
     }
+  }
+  
+  @override
+  List<Movie> getMovieFavorited() {
+    List<Movie> favoritedMovies = baseMovieLocalDataSource.getFavoritedMovies();
+    return favoritedMovies;
+  }
+  
+  @override
+  addMovieToFavorite(Movie movie) {
+    baseMovieLocalDataSource.addMovieTofavorite(movie);
+  }
+  
+  @override
+  Movie getSingleMovieFavorited(String key) {
+    return baseMovieLocalDataSource.getSingleMovieFavorited(key);
   }
 
 }

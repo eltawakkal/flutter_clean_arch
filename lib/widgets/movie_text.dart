@@ -6,12 +6,13 @@ class MovieText extends StatelessWidget {
   final Color? color;
   final double? size;
   final int? maxLines;
+  final TextAlign? textAlign;
 
-  const MovieText({super.key, required this.text, this.weight, this.color, this.size, this.maxLines});
+  const MovieText({super.key, required this.text, this.weight, this.color, this.size, this.maxLines, this.textAlign});
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, maxLines: maxLines ?? 2, style: TextStyle(
+    return Text(text, textAlign: textAlign ?? TextAlign.left, maxLines: maxLines ?? 2, style: TextStyle(
       color: color ?? Colors.black87,
       fontSize: size ?? 14,
       height: 0,

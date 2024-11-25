@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const MovieText(
             text: 'Movie Update',
-            size: 16,
+            size: 18,
             weight: FontWeight.bold,
           ),
           bottom: const TabBar(
