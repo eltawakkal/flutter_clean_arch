@@ -1,6 +1,3 @@
-import 'package:fadhli_test_flutter/features/movie/domain/entities/movie.dart';
-import 'package:fadhli_test_flutter/injection.dart';
-
 import '../../screens/detail_page.dart';
 import '../widgets/movie_item_container.dart';
 import 'package:flutter/material.dart';
