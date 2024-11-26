@@ -1,4 +1,4 @@
-import 'favorite_page.dart';
+import '../components/home_page/favorite_page.dart';
 import 'home_page.dart';
 import 'package:flutter/material.dart';
 

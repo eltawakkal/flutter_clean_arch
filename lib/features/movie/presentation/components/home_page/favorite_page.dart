@@ -1,21 +1,28 @@
-import 'detail_page.dart';
-import 'widgets/movie_item_container.dart';
+import 'package:fadhli_test_flutter/features/movie/domain/entities/movie.dart';
+import 'package:fadhli_test_flutter/injection.dart';
+
+import '../../screens/detail_page.dart';
+import '../widgets/movie_item_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/movie_bloc.dart';
-import '../bloc/movie_event.dart';
-import '../bloc/movie_state.dart';
-import '../../../../injection.dart';
-import '../../../../widgets/movie_text.dart';
+import '../../bloc/movie_bloc.dart';
+import '../../bloc/movie_event.dart';
+import '../../bloc/movie_state.dart';
+import '../../../../../widgets/movie_text.dart';
 
 class FavoritePage extends StatelessWidget {
   const FavoritePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    refreshData() {
+      context.read<MovieBloc>().add(MovieEventGetFavoritedMovies());
+    }
+
     return BlocBuilder<MovieBloc, BaseMovieState>(
-      bloc: movieInjection<MovieBloc>()..add(MovieEventGetFavoritedMovies()),
+      bloc: context.read<MovieBloc>()..add(MovieEventGetFavoritedMovies()),
       builder: (context, state) {
         if (state is MovieStateLoadedMovieFromFavorite) {
           if (state.movies.isEmpty) {
@@ -45,6 +52,7 @@ class FavoritePage extends StatelessWidget {
                         builder: (context) => DetailPage(movie: state.movies[index],),
                       ),
                     );
+                    refreshData();
                   },
                   movie: state.movies[index]
                 ),

@@ -1,4 +1,4 @@
-import 'features/movie/presentation/pages/main_page.dart';
+import 'features/movie/presentation/screens/main_page.dart';
 import 'features/movie/presentation/bloc/movie_bloc.dart';
 import 'injection.dart';
 import 'package:flutter/material.dart';

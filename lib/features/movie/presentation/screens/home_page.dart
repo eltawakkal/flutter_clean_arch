@@ -1,5 +1,5 @@
-import 'now_playing_page.dart';
-import 'upcoming_page.dart';
+import '../components/home_page/now_playing_page.dart';
+import '../components/home_page/upcoming_page.dart';
 import '../../../../widgets/movie_text.dart';
 import 'package:flutter/material.dart';
 
