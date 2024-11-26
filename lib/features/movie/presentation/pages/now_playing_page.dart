@@ -1,3 +1,4 @@
+import 'package:fadhli_test_flutter/features/movie/presentation/pages/detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/movie_item_container.dart';
@@ -5,6 +6,7 @@ import 'widgets/movie_item_container.dart';
 import '../bloc/movie_bloc.dart';
 import '../bloc/movie_event.dart';
 import '../bloc/movie_state.dart';
+import '../../../../injection.dart';
 import '../../../../widgets/movie_text.dart';
 
 
@@ -14,7 +16,7 @@ class NowPlayingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MovieBloc, BaseMovieState>(
-      bloc: context.read<MovieBloc>()..add(MovieEventGetNowPlaying(1)),
+      bloc: movieInjection<MovieBloc>()..add(MovieEventGetNowPlaying(1)),
       builder: (context, state) {
         if (state is MovieStateLoading) {
           return const Center(
@@ -29,6 +31,9 @@ class NowPlayingPage extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             itemCount: state.movies.length,
             itemBuilder: (context, index) => MovieItemContainer(
+              action: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => DetailPage(movie: state.movies[index],))
+              ),
               movie: state.movies[index],
             ),
           );

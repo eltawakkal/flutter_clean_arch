@@ -1,5 +1,5 @@
-import 'package:fadhli_test_flutter/features/movie/presentation/pages/favorite_page.dart';
-import 'package:fadhli_test_flutter/features/movie/presentation/pages/home_page.dart';
+import 'favorite_page.dart';
+import 'home_page.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {

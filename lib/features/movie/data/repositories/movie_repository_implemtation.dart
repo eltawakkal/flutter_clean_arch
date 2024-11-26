@@ -95,8 +95,19 @@ class MovieRepositoryImplemtation extends BaseMovieRepository {
   }
   
   @override
-  Movie getSingleMovieFavorited(String key) {
-    return baseMovieLocalDataSource.getSingleMovieFavorited(key);
+  Either<Failure, Movie> getSingleMovieFavorited(String key) {
+    try {
+      Movie movie = baseMovieLocalDataSource.getSingleMovieFavorited(key);
+      
+      return Right(movie);
+    } catch (e) {
+      return Left(Failure());
+    }
+  }
+  
+  @override
+  deleteMovieToFavorite(String key) {
+    baseMovieLocalDataSource.deleteFavoritedMovie(key);
   }
 
 }

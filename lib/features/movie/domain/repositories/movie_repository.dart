@@ -10,6 +10,7 @@ abstract class BaseMovieRepository {
   Future<Either<Failure, MovieDetail>> getMovieDetail(int movieId);
 
   addMovieToFavorite(Movie movie);
-  Movie getSingleMovieFavorited(String key);
+  deleteMovieToFavorite(String key);
+  Either<Failure, Movie> getSingleMovieFavorited(String key);
   List<Movie> getMovieFavorited();
 }

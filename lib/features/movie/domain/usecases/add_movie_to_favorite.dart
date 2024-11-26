@@ -1,5 +1,5 @@
-import 'package:fadhli_test_flutter/features/movie/domain/entities/movie.dart';
-import 'package:fadhli_test_flutter/features/movie/domain/repositories/movie_repository.dart';
+import '../entities/movie.dart';
+import '../repositories/movie_repository.dart';
 
 class AddMovieToFavorite {
   final BaseMovieRepository baseMovieRepository;

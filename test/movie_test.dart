@@ -15,7 +15,7 @@ void main() async {
     print('GEETTING NOW PLAYING====================');
     for (var element in responseNowPlaying) {
       print(element.posterPath);
-    };
+    }
   } catch (e) {
     print(e);
   }
@@ -26,7 +26,7 @@ void main() async {
   print('GEETTING UPCOMING====================');
   for (var element in responseUpcoming) {
     print(element.posterPath);
-  };
+  }
 
   print('GETTING DETAIL MOVIE====================');
   print(responseDetailMovie.posterPath);

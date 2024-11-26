@@ -1,15 +1,14 @@
 import 'package:country_flags/country_flags.dart';
-import 'package:fadhli_test_flutter/core/constants/api_constants.dart';
-import 'package:fadhli_test_flutter/features/movie/domain/entities/movie.dart';
-import 'package:fadhli_test_flutter/features/movie/presentation/bloc/movie_bloc.dart';
-import 'package:fadhli_test_flutter/features/movie/presentation/bloc/movie_event.dart';
-import 'package:fadhli_test_flutter/features/movie/presentation/bloc/movie_state.dart';
-import 'package:fadhli_test_flutter/features/movie/presentation/pages/now_playing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/constants/api_constants.dart';
 import '../../../../core/constants/local_constants.dart';
 import '../../../../widgets/movie_text.dart';
+import '../../domain/entities/movie.dart';
+import '../bloc/movie_bloc.dart';
+import '../bloc/movie_event.dart';
+import '../bloc/movie_state.dart';
 
 class DetailPage extends StatelessWidget {
   final Movie movie;
@@ -41,9 +40,13 @@ class DetailPage extends StatelessWidget {
                 CircleAvatar(
                   child: IconButton(
                     onPressed: () {
-                      context.read<MovieBloc>().add(MovieEventAddToFavorite(movie));
+                      if (state is MovieStateFavorited) {
+                        context.read<MovieBloc>().add(MovieEventDeletFavoritedMovie(movie.id.toString()));
+                      } else {
+                        context.read<MovieBloc>().add(MovieEventAddToFavorite(movie));
+                      }
                     },
-                    icon: const Icon(Icons.favorite)
+                    icon: Icon(state is MovieStateFavorited ? Icons.favorite : Icons.favorite_border)
                   ),
                 ),
               ],

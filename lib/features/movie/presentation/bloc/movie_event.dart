@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:fadhli_test_flutter/features/movie/domain/entities/movie.dart';
+import '../../domain/entities/movie.dart';
 
 abstract class BaseMovieEvent extends Equatable{}
 
@@ -44,6 +44,13 @@ class MovieEventGetSingleFavoritedMovies extends BaseMovieEvent {
   final String key;
   MovieEventGetSingleFavoritedMovies(this.key);
   
+  @override
+  List<Object?> get props => [];
+}
+
+class MovieEventDeletFavoritedMovie extends BaseMovieEvent {
+  final String key;
+  MovieEventDeletFavoritedMovie(this.key);
   @override
   List<Object?> get props => [];
 }

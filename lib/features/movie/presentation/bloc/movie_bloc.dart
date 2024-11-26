@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
-import 'package:fadhli_test_flutter/features/movie/domain/usecases/get_single_movie_favorited.dart';
+import 'package:fadhli_test_flutter/features/movie/domain/usecases/delete_favorited_movie.dart';
+import '../../domain/usecases/get_single_movie_favorited.dart';
 import 'movie_event.dart';
 import 'movie_state.dart';
 
@@ -20,6 +21,7 @@ class MovieBloc extends Bloc<BaseMovieEvent, BaseMovieState> {
   final AddMovieToFavorite addMovieToFavorite;
   final GetMovieFavorited getFavoritedMovies;
   final GetSingleMovieFavorited getSingleMovieFavorited;
+  final DeleteFavoritedMovie deleteFavoritedMovie;
 
 
   MovieBloc({
@@ -28,7 +30,8 @@ class MovieBloc extends Bloc<BaseMovieEvent, BaseMovieState> {
     required this.getMovieDetail,
     required this.addMovieToFavorite,
     required this.getFavoritedMovies,
-    required this.getSingleMovieFavorited
+    required this.getSingleMovieFavorited,
+    required this.deleteFavoritedMovie
   }) : super(MovieStateEmpty()) {
     on<MovieEventGetNowPlaying>((event, emit) async {
       emit(MovieStateLoading());
@@ -72,7 +75,20 @@ class MovieBloc extends Bloc<BaseMovieEvent, BaseMovieState> {
     });
     on<MovieEventAddToFavorite>((event, emit) async {
       await addMovieToFavorite.execute(event.movie);
+      emit(MovieStateFavorited());
     });
-    on<MovieEventGetSingleFavoritedMovies>((event, emit) => getSingleMovieFavorited.execute(event.key));
+    on<MovieEventGetSingleFavoritedMovies>((event, emit) {
+        Either<Failure, Movie> movie = getSingleMovieFavorited.execute(event.key);
+        movie.fold((leftResponseResult) {
+          emit(MovieStateNotFavorited());
+        }, (rightResult) {
+          emit(MovieStateFavorited());
+        });
+      }
+    );
+    on<MovieEventDeletFavoritedMovie>((event, emit) {
+      deleteFavoritedMovie.excute(event.key);
+      emit(MovieStateNotFavorited());
+    });
   }
 }

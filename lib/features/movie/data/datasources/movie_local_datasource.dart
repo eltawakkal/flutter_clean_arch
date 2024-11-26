@@ -1,4 +1,5 @@
-import 'package:fadhli_test_flutter/features/movie/domain/entities/movie.dart';
+import '../../../../core/error/exeption.dart';
+import '../../domain/entities/movie.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/movie_detail_model.dart';
@@ -11,6 +12,7 @@ abstract class BaseMovieLocalDatasource {
   Future<MovieDetailModel> getMovieDetail(int movieId);
 
   addMovieTofavorite(Movie movie);
+  deleteFavoritedMovie(String key);
   Movie getSingleMovieFavorited(String key);
   List<Movie> getFavoritedMovies();
 }
@@ -56,7 +58,19 @@ class MovieLocalDataSourceImplementation extends BaseMovieLocalDatasource {
   Movie getSingleMovieFavorited(String key) {
     var box = Hive.box(LocalConstants.favoritedMovieBox);
     // print('data: ${box.get(key)}');
-    return box.get(key);
+    Movie? movie = box.get(key);
+
+    if (movie == null) {
+      throw const EmptyExeption(message: 'No Data Found');
+    } else {
+      return movie;
+    }
+  }
+  
+  @override
+  deleteFavoritedMovie(String key) {
+    var box = Hive.box(LocalConstants.favoritedMovieBox);
+    box.delete(key);
   }
 
 }

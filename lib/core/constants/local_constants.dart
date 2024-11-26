@@ -8,3 +8,8 @@ class LocalConstants {
 
   static String assetImageGif(String imageName) => 'assets/images/gifs/$imageName';
 }
+
+enum ShowType {
+  NETWORK,
+  LOCAL
+}

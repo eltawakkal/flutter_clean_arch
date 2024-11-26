@@ -1,10 +1,13 @@
-import 'package:fadhli_test_flutter/features/movie/presentation/bloc/movie_bloc.dart';
-import 'package:fadhli_test_flutter/features/movie/presentation/bloc/movie_event.dart';
-import 'package:fadhli_test_flutter/features/movie/presentation/bloc/movie_state.dart';
-import 'package:fadhli_test_flutter/features/movie/presentation/pages/widgets/movie_item_container.dart';
-import 'package:fadhli_test_flutter/widgets/movie_text.dart';
+import 'detail_page.dart';
+import 'widgets/movie_item_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/movie_bloc.dart';
+import '../bloc/movie_event.dart';
+import '../bloc/movie_state.dart';
+import '../../../../injection.dart';
+import '../../../../widgets/movie_text.dart';
 
 class FavoritePage extends StatelessWidget {
   const FavoritePage({super.key});
@@ -12,7 +15,7 @@ class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MovieBloc, BaseMovieState>(
-      bloc: context.read<MovieBloc>()..add(MovieEventGetFavoritedMovies()),
+      bloc: movieInjection<MovieBloc>()..add(MovieEventGetFavoritedMovies()),
       builder: (context, state) {
         if (state is MovieStateLoadedMovieFromFavorite) {
           if (state.movies.isEmpty) {
@@ -34,7 +37,17 @@ class FavoritePage extends StatelessWidget {
               body: ListView.builder(
                 padding: const EdgeInsets.all(20),
                 itemCount: state.movies.length,
-                itemBuilder: (context, index) => MovieItemContainer(movie: state.movies[index]),
+                itemBuilder: (context, index) => MovieItemContainer(
+                  action: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailPage(movie: state.movies[index],),
+                      ),
+                    );
+                  },
+                  movie: state.movies[index]
+                ),
               ),
             );
           }
