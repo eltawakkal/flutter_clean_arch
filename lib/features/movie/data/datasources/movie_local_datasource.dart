@@ -1,7 +1,7 @@
-import '../../../../core/error/exeption.dart';
-import '../../domain/entities/movie.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../../domain/entities/movie.dart';
+import '../../../../core/error/exeption.dart';
 import '../models/movie_detail_model.dart';
 import '../../../../core/constants/local_constants.dart';
 import '../models/movie_model.dart';
